@@ -1,4 +1,8 @@
 # Satisfy in Docker
+[![Docker Automated build](https://img.shields.io/docker/automated/anapsix/satisfy.svg)](https://hub.docker.com/r/anapsix/satisfy/ "see it on Docker Hub") [![Docker Pulls](https://img.shields.io/docker/pulls/anapsix/satisfy.svg)](https://hub.docker.com/r/anapsix/satisfy/)
+
+
+
 [Satisfy][1] - Satis composer repository manager with a Web UI, in Docker container based on Alpine Linux.
 
  component    | version
