@@ -28,12 +28,24 @@ docker run -d --rm \
 docker run -d --rm \
            --name satisfy \
            -e SSH_PRIVATE_KEY="$(<./id_rsa)" \
+           -e CRON_SYNC_EVERY=120 \
            -p 8080:8080 \
            anapsix/satisfy
 ```
 
 ## Launch options
-See [`entrypoint.sh`][2]
+See [`entrypoint.sh`][2] for more details
+
+ option             | description
+------------------- | --------
+`REPO_NAME`         | name of your repository, defaults to `myrepo`
+`HOMEPAGE`          | url of this repository, defaults to `http://localhost:8080`
+`SSH_PRIVATE_KEY`   | private SSH key, used to access `git` repos, unused by default
+`ADD_HOST_KEYS`     | flag to enable watching `satis.json` for `git` repos, also turns on SSH `StrictHostKeyChecking`, defaults to `false`
+`CRON_ENABLED`      | flag to enable periodic `satis build`, defaults to `true`
+`CRON_SYNC_EVERY`   | rebuild satis index frequency, in seconds, defaults to `60`
+
+
 
 
 [: Links Reference :]::
