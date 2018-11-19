@@ -42,7 +42,13 @@ if [[ ! -e ${SATIS_FILE} ]]; then
     "homepage": "${HOMEPAGE}",
     "repositories": [
     ],
-    "require-all": true
+    "require-all": true,
+    "providers": true,
+    "archive": {
+        "directory": "dist",
+        "format": "zip",
+        "skip-dev": false
+    }
 }
 EOF
 fi
