@@ -6,5 +6,7 @@ SYNC_EVERY=${1:-60}
 
 while true; do
   sleep ${SYNC_EVERY}
-  ${APP_ROOT}/bin/satis build ${APP_ROOT}/satis.json
+  if [[ -e ${APP_ROOT}/satis.json ]]; then
+    ${APP_ROOT}/bin/satis build ${APP_ROOT}/satis.json
+  fi
 done
