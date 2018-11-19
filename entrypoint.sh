@@ -19,6 +19,8 @@ SATIS_FILE="${APP_ROOT}/satis.json"
 : ${ADD_HOST_KEYS:=false}
 : ${STRICT_HOST_KEY_CHECKING:-default set down below}
 
+: ${CRON_ENABLED:=true}
+: ${CRON_SYNC_EVERY:=60}
 
 if [[ ! -e ${PARAM_FILE} ]]; then
   cat >${PARAM_FILE} <<EOF
@@ -74,6 +76,11 @@ IdentityFile ${APP_ROOT}/id_rsa
 StrictHostKeyChecking ${STRICT_HOST_KEY_CHECKING}
 EOF
 chmod 400 ~/.ssh/config
+fi
+
+
+if [[ "${CRON_ENABLED}" == "true" ]]; then
+  /sync_repos.sh ${CRON_SYNC_EVERY}&
 fi
 
 
