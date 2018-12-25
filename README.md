@@ -1,7 +1,7 @@
 # Satisfy in Docker
-[![Docker Automated build](https://img.shields.io/docker/automated/anapsix/satisfy.svg)](https://hub.docker.com/r/anapsix/satisfy/ "see it on Docker Hub") [![Docker Pulls](https://img.shields.io/docker/pulls/anapsix/satisfy.svg)](https://hub.docker.com/r/anapsix/satisfy/)
+[![Docker Automated build](https://img.shields.io/docker/automated/anapsix/satisfy.svg)][docker hub] [![Docker Pulls](https://img.shields.io/docker/pulls/anapsix/satisfy.svg)][docker hub]
 
-
+[![Built with Nginx](https://img.shields.io/badge/built%20with-Nginx-green.svg?logo=nginx&logoColor=white)][nginx] [![Built with Nginx Unit](https://img.shields.io/badge/built%20with-Unit-green.svg?logo=nginx&logoColor=white)][unit]
 
 [Satisfy][1] - Satis composer repository manager with a Web UI, in Docker container based on Alpine Linux.
 
@@ -19,7 +19,7 @@ docker build -t satisfy .
 docker run -d --rm \
            --name satisfy \
            -e SSH_PRIVATE_KEY="$(<./id_rsa)" \
-           -p 8080:8080 \
+           -p 8080:80 \
            satisfy
 ```
 
@@ -29,7 +29,7 @@ docker run -d --rm \
            --name satisfy \
            -e SSH_PRIVATE_KEY="$(<./id_rsa)" \
            -e CRON_SYNC_EVERY=120 \
-           -p 8080:8080 \
+           -p 8080:80 \
            anapsix/satisfy
 ```
 
@@ -48,6 +48,9 @@ See [`entrypoint.sh`][2] for more details
 
 
 
-[: Links Reference :]::
+[## Links Reference ##]::
+[docker hub]: https://hub.docker.com/r/anapsix/satisfy/ "see it on Docker Hub"
+[nginx]: https://nginx.org/en/ "built with Nginx"
+[unit]: https://unit.nginx.org/ "built with Nginx Unit"
 [1]: https://github.com/ludofleury/satisfy
 [2]: ./entrypoint.sh

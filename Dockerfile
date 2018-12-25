@@ -21,8 +21,9 @@ RUN \
     apk add --no-cache php7-apcu php7-bcmath php7-ctype php7-curl php7-dom php7-fileinfo \
     php7-iconv php7-json php7-mbstring php7-openssl php7-phar php7-session \
     php7-simplexml php7-xml php7-tokenizer \
-    libxml2-dev inotify-tools jq zip curl openssh-client git && \
-    apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing gnu-libiconv && \
+    nginx unit-php7 \
+    procmail libxml2-dev inotify-tools jq zip curl openssh-client git && \
+    apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing gnu-libiconv gosu && \
     curl -o /usr/local/bin/composer https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar && \
     chmod +x /usr/local/bin/composer && \
     rm -rf /var/cache/apk/* && \
@@ -35,9 +36,10 @@ RUN \
     rm ${APP_ROOT}/app/config/parameters.yml && \
     chown -R ${APP_USER}:${APP_USER} ${APP_ROOT}
 
-COPY *.sh /
-EXPOSE 8080
+COPY script/*.sh /
+COPY config/unit.json /var/lib/unit/conf.json
+COPY config/nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
 
-USER ${APP_USER}
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "satisfy" ]

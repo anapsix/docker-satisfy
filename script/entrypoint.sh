@@ -8,6 +8,7 @@ PARAM_FILE="${APP_ROOT}/app/config/parameters.yml"
 SATIS_FILE="${APP_ROOT}/satis.json"
 
 : ${APP_ROOT:?must be set}
+: ${APP_USER:?must be set}
 : ${SECRET:=$GENERATED_SECRET}
 : ${ADMIN_AUTH:=false}
 : ${ADMIN_USERS:=\~}
@@ -22,6 +23,8 @@ SATIS_FILE="${APP_ROOT}/satis.json"
 : ${CRON_ENABLED:=true}
 : ${CRON_SYNC_EVERY:=60}
 
+APP_USER_HOME="$(awk -F: -v user="${APP_USER}" '$1==user {print $6}' /etc/passwd)"
+
 if [[ ! -e ${PARAM_FILE} ]]; then
   cat >${PARAM_FILE} <<EOF
 parameters:
@@ -32,6 +35,7 @@ parameters:
   admin.users: ${ADMIN_USERS}
   composer.home: "%kernel.project_dir%/.composer"
 EOF
+  chown ${APP_USER}:${APP_USER} ${PARAM_FILE}
 fi
 
 
@@ -51,47 +55,54 @@ if [[ ! -e ${SATIS_FILE} ]]; then
     }
 }
 EOF
+  chown ${APP_USER}:${APP_USER} ${SATIS_FILE}
 fi
 
 
 if [[ "${SSH_PRIVATE_KEY}" != "unset" ]] && [[ ! -e ${APP_ROOT}/id_rsa ]]; then
   echo "${SSH_PRIVATE_KEY}" > ${APP_ROOT}/id_rsa
   chmod 400 ${APP_ROOT}/id_rsa
+  chown ${APP_USER}:${APP_USER} ${APP_ROOT}/id_rsa
 fi
 
 
-if [[ ! -e ~/.ssh ]]; then
-  mkdir ~/.ssh
-  chmod 700 ~/.ssh
+if [[ ! -e ${APP_USER_HOME}/.ssh ]]; then
+  mkdir ${APP_USER_HOME}/.ssh
+  chown ${APP_USER}:${APP_USER} ${APP_USER_HOME}/.ssh
+  chmod 700 ${APP_USER_HOME}/.ssh
 fi
 
 
 if [[ ${ADD_HOST_KEYS} == "true" ]]; then
   : ${STRICT_HOST_KEY_CHECKING:=yes}
   while inotifywait -e close_write ${SATIS_FILE}; do
-    /record_host_fingerprint.sh
+    gosu ${APP_USER}:${APP_USER} /record_host_fingerprint.sh
   done&
 fi
 
 
-if [[ ! -e ~/.ssh/config ]]; then
+if [[ ! -e ${APP_USER_HOME}/.ssh/config ]]; then
   : ${STRICT_HOST_KEY_CHECKING:=no}
-  cat >~/.ssh/config <<EOF
+  cat >${APP_USER_HOME}/.ssh/config <<EOF
 Host *
 IdentityFile ${APP_ROOT}/id_rsa
 StrictHostKeyChecking ${STRICT_HOST_KEY_CHECKING}
 EOF
-chmod 400 ~/.ssh/config
+chmod 400 ${APP_USER_HOME}/.ssh/config
+chown ${APP_USER}:${APP_USER} ${APP_USER_HOME}/.ssh/config
 fi
 
 
 if [[ "${CRON_ENABLED}" == "true" ]]; then
-  /sync_repos.sh ${CRON_SYNC_EVERY}&
+  gosu ${APP_USER}:${APP_USER} /sync_repos.sh ${CRON_SYNC_EVERY}&
 fi
 
 
 if [[ "${1:-unset}" == "satisfy" ]]; then
-  exec -- php -S 0.0.0.0:8080 -t ${APP_ROOT}/web
+  echo >&2 "Starting NGINX Unit.."
+  unitd --log /dev/stdout
+  echo >&2 "Stating Nginx.."
+  exec -- nginx
 else
   exec -- sh
 fi

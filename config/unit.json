@@ -1,0 +1,19 @@
+{
+  "listeners": {
+    "127.0.0.1:9000": {
+        "application": "satisfy"
+    }
+  },
+  "applications": {
+    "satisfy": {
+      "type": "php",
+      "processes": 5,
+      "user": "satisfy",
+      "group": "satisfy",
+      "working_directory": "/app/web",
+      "root": "/app/web",
+      "index": "index.php",
+      "script": "index.php"
+    }
+  }
+}
