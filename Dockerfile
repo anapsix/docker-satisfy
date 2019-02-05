@@ -34,6 +34,7 @@ WORKDIR ${APP_ROOT}
 RUN \
     yes | composer create-project --no-dev playbloom/satisfy . ${SATISFY_VERSION} && \
     rm ${APP_ROOT}/app/config/parameters.yml && \
+    echo "HTTP server is up" > ${APP_ROOT}/web/serverup.txt && \
     chown -R ${APP_USER}:${APP_USER} ${APP_ROOT}
 
 COPY script/*.sh /
