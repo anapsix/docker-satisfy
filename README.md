@@ -1,6 +1,6 @@
 # Satisfy in Docker
 
-![License](https://img.shields.io/github/license/anapsix/docker-satisfy.svg) [![Built with Nginx](https://img.shields.io/badge/built%20with-NGINX%20+%20Unit-green.svg?logo=nginx&logoColor=white)][unit]  
+![License](https://img.shields.io/github/license/anapsix/docker-satisfy.svg) [![Built with Nginx](https://img.shields.io/badge/built%20with-NGINX%20+%20Unit-green.svg?logo=nginx&logoColor=white)][unit]
 [![Docker Automated build](https://img.shields.io/docker/automated/anapsix/satisfy.svg)][docker hub] [![Docker Pulls](https://img.shields.io/docker/pulls/anapsix/satisfy.svg)][docker hub]
 
 [Satisfy][1] - Satis composer repository manager with a Web UI, in Docker container based on Alpine Linux.
@@ -15,7 +15,7 @@
 ------------- | -------
 Alpine Linux  | `3.8`
 PHP           | `7.2`
-Composer      | `1.7.3`
+Composer      | `1.8.4`
 Satisfy       | `3.0.4`
 
 

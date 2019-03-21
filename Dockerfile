@@ -3,7 +3,7 @@ FROM alpine:3.8
 ARG APP_USER=satisfy
 
 ENV \
-    COMPOSER_VERSION=1.7.3 \
+    COMPOSER_VERSION=1.8.4 \
     SATISFY_VERSION=3.0.4 \
     LD_PRELOAD=/usr/lib/preloadable_libiconv.so \
     PHP_INI_PATH=/etc/php7/php.ini \
@@ -23,7 +23,7 @@ RUN \
       php7-simplexml php7-xml php7-xmlwriter php7-tokenizer \
       nginx unit-php7 \
       procmail libxml2-dev inotify-tools jq zip curl openssh-client git && \
-    apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing gnu-libiconv gosu && \
+    apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/community gnu-libiconv gosu && \
     curl -o /usr/local/bin/composer https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar && \
     chmod +x /usr/local/bin/composer && \
     rm -rf /var/cache/apk/* && \
