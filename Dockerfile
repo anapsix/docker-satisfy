@@ -23,7 +23,8 @@ RUN \
       php7-simplexml php7-xml php7-xmlwriter php7-tokenizer \
       nginx unit-php7 \
       procmail libxml2-dev inotify-tools jq zip curl openssh-client git && \
-    apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/community gnu-libiconv gosu && \
+    apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/community gnu-libiconv && \
+    apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing gosu && \
     curl -o /usr/local/bin/composer https://getcomposer.org/download/${COMPOSER_VERSION}/composer.phar && \
     chmod +x /usr/local/bin/composer && \
     rm -rf /var/cache/apk/* && \
