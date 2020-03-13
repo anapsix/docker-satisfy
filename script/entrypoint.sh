@@ -12,6 +12,10 @@ SATIS_FILE="${APP_ROOT}/satis.json"
 : ${SECRET:=$GENERATED_SECRET}
 : ${ADMIN_AUTH:=false}
 : ${ADMIN_USERS:=\~}
+: ${GITHUB_SECRET:=\~}
+: ${GITLAB_SECRET:=\~}
+: ${GITLAB_AUTO_ADD_REPO:=false}
+: ${GITLAB_AUTO_ADD_REPO_TYPE:=\~}
 
 : ${REPO_NAME:=myrepo}
 : ${HOMEPAGE:=http://localhost:8080}
@@ -21,7 +25,7 @@ SATIS_FILE="${APP_ROOT}/satis.json"
 : ${STRICT_HOST_KEY_CHECKING:-default set down below}
 
 : ${CRON_ENABLED:=true}
-: ${CRON_SYNC_EVERY:=60}
+: ${CRON_SYNC_EVERY:=300}
 
 APP_USER_HOME="$(awk -F: -v user="${APP_USER}" '$1==user {print $6}' /etc/passwd)"
 
@@ -34,6 +38,10 @@ parameters:
   admin.auth: ${ADMIN_AUTH}
   admin.users: ${ADMIN_USERS}
   composer.home: "%kernel.project_dir%/.composer"
+  github.secret: ${GITHUB_SECRET}
+  gitlab.secret: ${GITLAB_SECRET}
+  gitlab.auto_add_repo: ${GITLAB_AUTO_ADD_REPO}
+  gitlab.auto_add_repo_type: ${GITLAB_AUTO_ADD_REPO_TYPE}
 EOF
   chown ${APP_USER}:${APP_USER} ${PARAM_FILE}
 fi
