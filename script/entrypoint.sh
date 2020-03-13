@@ -25,7 +25,7 @@ SATIS_FILE="${APP_ROOT}/satis.json"
 : ${STRICT_HOST_KEY_CHECKING:-default set down below}
 
 : ${CRON_ENABLED:=true}
-: ${CRON_SYNC_EVERY:=300}
+: ${CRON_SYNC_EVERY:=60}
 
 APP_USER_HOME="$(awk -F: -v user="${APP_USER}" '$1==user {print $6}' /etc/passwd)"
 
