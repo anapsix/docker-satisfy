@@ -1,5 +1,5 @@
-#!/usr/bin/env sh
-# scan Satis config for repositorues
+#!/usr/bin/env bash
+# scan Satis config for repositories
 
 set -u
 
