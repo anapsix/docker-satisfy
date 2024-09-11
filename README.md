@@ -44,7 +44,7 @@ See [`entrypoint.sh`][2] for more details
 
  option             | description
 ------------------- | --------
-`REPO_NAME`         | name of your repository, defaults to `my-vendor-name/my-package-name`
+`REPO_NAME`         | name of your repository, defaults to `myorg/myrepo`
 `HOMEPAGE`          | url of this repository, defaults to `http://localhost:8080`
 `SSH_PRIVATE_KEY`   | private SSH key, used to access `git` repos, unused by default
 `ADD_HOST_KEYS`     | flag to enable watching `satis.json` for `git` repos, also turns on SSH `StrictHostKeyChecking`, defaults to `false`
